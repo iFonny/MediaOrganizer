@@ -53,7 +53,7 @@ router.post('/move', async ctx => {
 async function moveToMovingFolder(filepath, episodeFileName, serieFilePath) {
   const jdlPath = __config.paths.jdownloader;
   const newFilepath = jdlPath.root + jdlPath.moving + serieFilePath;
-  await moveFile(filepath, newFilepath);
+  await moveFile(filepath, newFilepath, { overwrite: false });
   console.log(`file '${episodeFileName}' MOVED TO '${newFilepath}' (Moving folder)`);
 
   return newFilepath;
@@ -65,7 +65,7 @@ async function moveToSerieFolder(filepath, serie, episodeFileName, serieFilePath
   const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
 
   // Move to serie folder in HDD
-  await moveFile(filepath, destinationFullPath);
+  await moveFile(filepath, destinationFullPath, { overwrite: false });
   console.log(`file '${episodeFileName}' MOVED TO '${destinationFullPath}'`);
 
   return destinationFullPath;
