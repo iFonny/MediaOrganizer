@@ -1,5 +1,6 @@
 const router = require('koa-router')();
 const path = require('path');
+const fs = require('fs');
 const moveFile = require('move-file');
 
 const { BadRequest } = require('+lib/error');
@@ -15,7 +16,8 @@ const { BadRequest } = require('+lib/error');
  *        serie: 'Brooklyn Nine-Nine (2014)',
  *        season: 6,
  *        episode: 15,
- *        lang: 'MULTI'
+ *        lang: 'MULTI',
+ *        overwrite: 'false' (optional)
  *     }
  *
  * @apiSampleRequest /api/series/move
@@ -30,8 +32,18 @@ router.post('/move', async ctx => {
   const season = ctx.checkBody('season').isInt().value;
   const episode = ctx.checkBody('episode').isInt().value;
   const lang = ctx.checkBody('lang').notEmpty().value;
+  const overwrite = ctx
+    .checkBody('overwrite')
+    .default(false)
+    .in([true, false]).value;
 
   if (ctx.errors) throw new BadRequest(ctx.errors);
+
+  try {
+    if (!fs.statSync(filepath).isFile()) return ctx.send(400, 'filepath is not a file');
+  } catch (error) {
+    return ctx.send(400, `filepath doesn't exit`);
+  }
 
   const extension = path.extname(filepath);
   const seasonString = season.toString().length === 1 ? `S0${season}` : `S${season}`;
@@ -43,30 +55,30 @@ router.post('/move', async ctx => {
   // Relative serie path to episode
   const serieFilePath = `${serie}/${seasonName}/${episodeFileName}`;
 
-  let fileCurrentPath = await moveToMovingFolder(filepath, episodeFileName, serieFilePath);
-  fileCurrentPath = await moveToSerieFolder(fileCurrentPath, serie, episodeFileName, serieFilePath);
+  let fileCurrentPath = await moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite);
+  fileCurrentPath = await moveToSerieFolder(fileCurrentPath, serie, episodeFileName, serieFilePath, overwrite);
 
   ctx.ok(fileCurrentPath);
 });
 
 // Move to 'Moving' folder
-async function moveToMovingFolder(filepath, episodeFileName, serieFilePath) {
+async function moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite) {
   const jdlPath = __config.paths.jdownloader;
   const newFilepath = jdlPath.root + jdlPath.moving + serieFilePath;
-  await moveFile(filepath, newFilepath, { overwrite: false });
+  await moveFile(filepath, newFilepath, { overwrite });
   console.log(`file '${episodeFileName}' MOVED TO '${newFilepath}' (Moving folder)`);
 
   return newFilepath;
 }
 
 // Move to serie folder in HDD
-async function moveToSerieFolder(filepath, serie, episodeFileName, serieFilePath) {
+async function moveToSerieFolder(filepath, serie, episodeFileName, serieFilePath, overwrite) {
   // Add path to HDD (en fonction de l'ordre alpha)
   const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
 
   // Move to serie folder in HDD
-  await moveFile(filepath, destinationFullPath, { overwrite: false });
-  console.log(`file '${episodeFileName}' MOVED TO '${destinationFullPath}'`);
+  await moveFile(filepath, destinationFullPath, { overwrite });
+  console.log(`MOVING '${episodeFileName}' TO '${destinationFullPath}'...`);
 
   return destinationFullPath;
 }
