@@ -77,7 +77,7 @@ async function moveToSerieFolder(filepath, serie, episodeFileName, serieFilePath
   const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
 
   // Move to serie folder in HDD
-  await moveFile(filepath, destinationFullPath, { overwrite });
+  moveFile(filepath, destinationFullPath, { overwrite });
   console.log(`MOVING '${episodeFileName}' TO '${destinationFullPath}'...`);
 
   return destinationFullPath;
