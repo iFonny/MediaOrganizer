@@ -14,10 +14,10 @@
         "moving": "Moving/"
       },
       "plex": {
-        "series": [
-          "/media/nico/Plex 1/Series/Tout",
-          "/media/nico/Plex 2/Series"
-        ]
+        "series": {
+          "A-O": "/media/nico/Plex 1/Series/Tout/",
+          "P-Z": "/media/nico/Plex 2/Series/"
+        }
       }
     }
   }

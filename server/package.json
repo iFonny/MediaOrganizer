@@ -37,7 +37,8 @@
     "koa-static": "^5.0.0",
     "koa-validate": "^1.0.7",
     "link-module-alias": "^1.2.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "move-file": "^1.2.0"
   },
   "devDependencies": {
     "link-module-alias": "^1.2.0",

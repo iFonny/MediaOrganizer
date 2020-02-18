@@ -13,15 +13,10 @@ router.get('/list', async ctx => {
   const seriePaths = __config.paths.plex.series;
 
   try {
-    let series = [];
-
-    for (const seriePath of seriePaths) {
-      const files = fs
-        .readdirSync(seriePath)
-        .filter(file => fs.statSync(path.join(seriePath, file)).isDirectory());
-
-      series = [...series, ...files];
-    }
+    let series = [
+      ...fs.readdirSync(seriePaths['A-O']).filter(file => fs.statSync(path.join(seriePaths['A-O'], file)).isDirectory()),
+      ...fs.readdirSync(seriePaths['P-Z']).filter(file => fs.statSync(path.join(seriePaths['P-Z'], file)).isDirectory())
+    ];
 
     return ctx.ok(series.sort());
   } catch (error) {
