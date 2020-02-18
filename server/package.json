@@ -17,7 +17,8 @@
     "postinstall": "link-module-alias",
     "preinstall": "command -v link-module-alias && link-module-alias clean || true",
     "dev": "nodemon index",
-    "start": "node index.js"
+    "start": "node index.js",
+    "production": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",

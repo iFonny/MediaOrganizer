@@ -6,10 +6,19 @@
       "url": "http://localhost",
       "routerPrefix": "api"
     },
-    "db": {
-      "host": "127.0.0.1",
-      "port": 27017,
-      "name": "webcrawler"
+    "paths": {
+      "jdownloader": {
+        "root": "/home/nico/Bureau/JDownloader/",
+        "series": "Series/",
+        "films": "Films/",
+        "moving": "Moving/"
+      },
+      "plex": {
+        "series": [
+          "/media/nico/Plex 1/Series/Tout",
+          "/media/nico/Plex 2/Series"
+        ]
+      }
     }
   }
 }
