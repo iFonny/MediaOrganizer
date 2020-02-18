@@ -8,8 +8,16 @@
     },
     "paths": {
       "jdownloader": {
-        "series": "/Users/ifonny/Desktop/JDownloader/Series",
-        "films": "/Users/ifonny/Desktop/JDownloader/Films"
+        "root": "/Users/ifonny/Desktop/JDownloader/",
+        "series": "Series/",
+        "films": "Films/",
+        "moving": "Moving/"
+      },
+      "plex": {
+        "series": [
+          "/Users/ifonny/Desktop/JDownloader/mnt/Plex 1/Series/Tout/",
+          "/Users/ifonny/Desktop/JDownloader/mnt/Plex 2/Series/"
+        ]
       }
     },
     "db": {

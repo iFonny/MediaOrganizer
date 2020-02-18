@@ -15,7 +15,7 @@ const koaStatic = require('koa-static');
 const config = require('config');
 // DELETE const mongoose = require('mongoose');
 
-const errorHandler = require('@lib/error_handler');
+const errorHandler = require('+lib/error_handler');
 
 //=======================================================================//
 //     Configs                                                           //
@@ -85,8 +85,6 @@ require('koa-validate')(app);
 //     Routes          		                                               //
 //=======================================================================//
 
-console.log(__config);
-
 // Set API routes
 router.prefix(`/${__config.server.routerPrefix}`);
 fs.readdirSync('./routes')
@@ -99,7 +97,6 @@ fs.readdirSync('./routes')
       .forEach(route => {
         const nestedRouter = require(`./routes/${routeName}/${route}`);
 
-        console.log(`[ROUTES] - /${routeName}`);
         router.use(
           `/${routeName}`,
           nestedRouter.routes(),
