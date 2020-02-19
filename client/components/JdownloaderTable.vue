@@ -69,7 +69,7 @@ export default {
         hasModalCard: true,
         trapFocus: true,
         props: item,
-        onCancel: function() {
+        onCancel: () => {
           this.$emit('refresh')
         },
         events: {

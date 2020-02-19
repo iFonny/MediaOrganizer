@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: auto; min-width: 90vh">
+  <div class="modal-card" style="width: auto; min-width: 58vw;min-height: 95vh;">
     <header class="modal-card-head">
       <p class="modal-card-title"><strong>Move</strong> {{ name }}</p>
     </header>
@@ -57,6 +57,9 @@
                 <b-field>
                   <b-checkbox v-model="moveEpisodeForm.overwrite" type="is-danger">Overwrite</b-checkbox>
                 </b-field>
+              </div>
+              <div class="column">
+                <b-button type="is-dark" expanded @click.prevent="activeStep -= 1">Back</b-button>
               </div>
               <div class="column">
                 <b-button type="is-success" :disabled="!isMoveEpisodeFormFieldsValid" :loading="buttonLoading" expanded @click.prevent="moveEpisode">
