@@ -1,9 +1,6 @@
 const router = require('koa-router')();
 const fs = require('fs');
 const path = require('path');
-
-const dirTree = require('directory-tree');
-
 /**
  * @api {get} /list Get list of all series on plex media HDD
  * @apiParam (query string) {string} format - csv or json

@@ -28,6 +28,7 @@
     "directory-tree": "^2.2.4",
     "dotenv": "^6.2.0",
     "es6-error": "^4.1.1",
+    "glob": "^7.1.6",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^5.2.0",
@@ -38,11 +39,17 @@
     "koa-validate": "^1.0.7",
     "link-module-alias": "^1.2.0",
     "lodash": "^4.17.15",
-    "move-file": "^1.2.0"
+    "move-file": "^1.2.0",
+    "recursive-readdir": "^2.2.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "link-module-alias": "^1.2.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "prettier": "^1.19.1"
   },
   "_moduleAliases": {
     "+lib": "lib"

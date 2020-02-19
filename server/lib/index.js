@@ -13,11 +13,16 @@ exports.getEpisodeInfo = function(filename) {
   if (filename.includes('VOSTFR')) info.lang = 'VOSTFR';
   if (filename.includes('MULTI')) info.lang = 'MULTI';
 
-  const {
-    groups: { season, episode }
-  } = /(S(?<season>\d{1,3}))?(E(?<episode>\d{1,3}))/gim.exec(filename);
-  info.season = season ? parseInt(season, 10) : null;
-  info.episode = episode ? parseInt(episode, 10) : null;
+  const regexResult = /(S(?<season>\d{1,3}))?(E(?<episode>\d{1,3}))/gim.exec(filename);
+
+  if (regexResult) {
+    const {
+      groups: { season, episode }
+    } = regexResult;
+
+    info.season = season ? parseInt(season, 10) : null;
+    info.episode = episode ? parseInt(episode, 10) : null;
+  }
 
   return info;
 };

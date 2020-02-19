@@ -91,17 +91,11 @@ fs.readdirSync('./routes')
   .filter(file => fs.statSync(path.join('./routes', file)).isDirectory())
   .forEach(routeName => {
     fs.readdirSync(`./routes/${routeName}`)
-      .filter(file =>
-        fs.statSync(path.join(`./routes/${routeName}`, file)).isFile()
-      )
+      .filter(file => fs.statSync(path.join(`./routes/${routeName}`, file)).isFile())
       .forEach(route => {
         const nestedRouter = require(`./routes/${routeName}/${route}`);
 
-        router.use(
-          `/${routeName}`,
-          nestedRouter.routes(),
-          nestedRouter.allowedMethods()
-        );
+        router.use(`/${routeName}`, nestedRouter.routes(), nestedRouter.allowedMethods());
       });
   });
 app.use(router.routes());
