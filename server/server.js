@@ -51,9 +51,7 @@ const router = new Router();
 
 app.use(Helmet());
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(Logger());
-}
+app.use(Logger());
 
 // Enable cors
 app.use(Cors());
