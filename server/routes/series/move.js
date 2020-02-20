@@ -7,8 +7,7 @@ const { BadRequest } = require('+lib/error');
 
 /**
  * @api {get} /move Move file to serie season folder
- * @apiParam (query string) {string} format - csv or json
- *  * @apiExample Example usage:
+ * @apiExample Example usage:
  *
  *     body:
  *     {

@@ -40,7 +40,8 @@
     "link-module-alias": "^1.2.0",
     "lodash": "^4.17.15",
     "move-file": "^1.2.0",
-    "recursive-readdir": "^2.2.2"
+    "recursive-readdir": "^2.2.2",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
