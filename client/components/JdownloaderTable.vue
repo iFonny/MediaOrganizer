@@ -58,6 +58,11 @@ export default {
         props: item,
         onCancel: () => {
           this.$emit('refresh')
+        },
+        events: {
+          refresh: () => {
+            this.$emit('refresh')
+          }
         }
       })
     },
