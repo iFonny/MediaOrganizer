@@ -11,6 +11,8 @@
         </p>
         <p><strong>Size: </strong> {{ getSizeInMo(size) }} Mo ({{ getSizeInGo(size) }} Go)</p>
 
+        <p><strong>Last change: </strong> {{ ctime }}</p>
+
         <p>
           <strong>Type: </strong> <b-tag type="is-info">{{ type }}</b-tag> <b-tag v-if="extension" type="is-dark">{{ extension }}</b-tag>
         </p>
@@ -20,10 +22,20 @@
 
       <div v-if="type === 'file'" class="columns">
         <div class="column">
-          <b-button type="is-info" icon-left="filmstrip" expanded>Move to Films (JDL)</b-button>
+          <b-button
+            type="is-info"
+            :icon-left="modalType === 'series' ? 'filmstrip' : 'television'"
+            expanded
+            @click.prevent="confirmMoveToJDL(fullPath, modalType === 'series' ? 'films' : 'series')"
+          >
+            Move to {{ modalType === 'series' ? 'Films' : 'Series' }} (JDL)
+          </b-button>
         </div>
         <div class="column">
-          <b-button type="is-warning" expanded @click="openModalMoveToPlex($props)">Move to Series (Plex)</b-button>
+          <b-button v-if="modalType === 'films'" type="is-warning" expanded @click="openModalMoveToPlexFilms($props)">Move to Films (Plex)</b-button>
+          <b-button v-if="modalType === 'series'" type="is-warning" expanded @click="openModalMoveToPlexSeries($props)">
+            Move to Series (Plex)
+          </b-button>
         </div>
       </div>
       <div class="columns">
@@ -40,9 +52,15 @@
 
 <script>
 import ModalMoveSerie from '~/components/ModalMoveSerie'
+import ModalMoveFilm from '~/components/ModalMoveFilm'
 
 export default {
   props: {
+    modalType: {
+      type: String, // series | films
+      required: true
+    },
+
     name: {
       type: String,
       required: true
@@ -67,6 +85,10 @@ export default {
       type: String,
       required: true
     },
+    ctime: {
+      type: String,
+      required: true
+    },
     numbersOfFiles: {
       type: Number,
       required: true
@@ -82,13 +104,50 @@ export default {
       return parseFloat(size / 1000000000).toFixed(4)
     },
 
-    openModalMoveToPlex(item) {
+    openModalMoveToPlexSeries(item) {
       this.$buefy.modal.open({
         parent: this,
         component: ModalMoveSerie,
         hasModalCard: true,
         trapFocus: true,
         props: item
+      })
+    },
+
+    openModalMoveToPlexFilms(item) {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ModalMoveFilm,
+        hasModalCard: true,
+        trapFocus: true,
+        props: item
+      })
+    },
+
+    confirmMoveToJDL(filepath, destination) {
+      this.$buefy.dialog.confirm({
+        title: `Moving to JDL folder ${destination}`,
+        message: `Are you sure you want to move this file to <b>${destination}</b> ?`,
+        confirmText: 'Move',
+        type: 'is-warning',
+        hasIcon: true,
+        onConfirm: async () => {
+          try {
+            await this.$axios.$post('/files/move-to-jdl', { filepath, destination })
+            this.$emit('refresh')
+            this.$parent.close()
+            this.$buefy.toast.open('File moved!')
+          } catch (error) {
+            this.$buefy.notification.open({
+              duration: 5000,
+              message: `Error: can't move file`,
+              position: 'is-top',
+              type: 'is-danger',
+              hasIcon: true
+            })
+            console.error(error)
+          }
+        }
       })
     },
 

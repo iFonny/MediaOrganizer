@@ -3,7 +3,7 @@ const { BadRequest } = require('+lib/error');
 const fs = require('fs');
 const rimraf = require('rimraf');
 /**
- * @api {get} /delete Delete a file
+ * @api {delete} /delete Delete a file
  * @apiExample Example usage:
  *
  *     body:

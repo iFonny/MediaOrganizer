@@ -4,20 +4,20 @@ const path = require('path');
 const glob = require('glob');
 
 /**
- * @api {get} /jdl-list Get all files in jdownloader series folder
- * @apiSampleRequest /api/series/jdl-list
+ * @api {get} /moving-list Get all moving files
+ * @apiSampleRequest /api/files/moving-list
  */
-router.get('/jdl-list', async ctx => {
+router.get('/moving-list', async ctx => {
   const jdlPath = __config.paths.jdownloader;
-  const seriesPath = jdlPath.root + jdlPath.series;
+  const movingPath = jdlPath.root + jdlPath.moving;
 
   try {
-    let files = glob.sync(seriesPath + '/**/*', { dot: true });
+    let files = glob.sync(movingPath + '/**/*', { dot: true });
 
     files = files.map(file => ({
       name: path.basename(file),
       fullPath: file,
-      path: file.replace(seriesPath, ''),
+      path: file.replace(movingPath, ''),
       size: fs.statSync(file).size,
       extension: path.extname(file),
       type: fs.statSync(file).isDirectory() ? 'directory' : fs.statSync(file).isFile() ? 'file' : 'unknown',
@@ -25,7 +25,7 @@ router.get('/jdl-list', async ctx => {
       numbersOfFiles: fs.statSync(file).isDirectory() ? fs.readdirSync(file).length : 0
     }));
 
-    return ctx.ok(files.sort((a, b) => a.path.localeCompare(b.path)));
+    return ctx.ok(files);
   } catch (error) {
     console.error(error);
     return ctx.send(500, error);

@@ -18,25 +18,25 @@
               <b-input v-model="searchQuery" placeholder="Search..." type="search" icon="magnify" icon-clickable> </b-input>
             </div>
 
-            <a v-for="serie of filteredSeries" :key="serie" class="panel-block" @click.prevent="selectSerie(serie)">{{ serie }}</a>
+            <a v-for="serie of filteredSeries" :key="serie.fullPath" class="panel-block" @click.prevent="selectSerie(serie.name)">{{ serie.name }}</a>
           </article>
         </b-step-item>
 
         <b-step-item label="Move" icon="folder-move">
-          <b-field label="Serie">
+          <b-field label="Serie *">
             <b-input v-model="moveEpisodeForm.serie" placeholder="Serie (YEAR)" required expanded />
           </b-field>
 
-          <b-field label="Season">
+          <b-field label="Season *">
             <b-numberinput v-model="moveEpisodeForm.season" min="1" max="999" required expanded />
           </b-field>
 
-          <b-field label="Episode">
+          <b-field label="Episode *">
             <b-numberinput v-model="moveEpisodeForm.episode" min="1" max="999" required expanded />
           </b-field>
 
-          <b-field label="Lang">
-            <b-select v-model="moveEpisodeForm.lang" placeholder="Country" icon="earth" required expanded>
+          <b-field label="Lang *">
+            <b-select v-model="moveEpisodeForm.lang" placeholder="Lang" icon="earth" required expanded>
               <option value="VF">VF</option>
               <option value="VO">VO</option>
               <option value="VOST">VOST</option>
@@ -126,7 +126,7 @@ export default {
 
   computed: {
     filteredSeries() {
-      return this.allSeries.filter(e => e.toLowerCase().includes(this.searchQuery.toLowerCase()))
+      return this.allSeries.filter(e => e.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
     },
 
     isMoveEpisodeFormFieldsValid() {

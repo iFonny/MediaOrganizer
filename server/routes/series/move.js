@@ -6,7 +6,7 @@ const moveFile = require('move-file');
 const { BadRequest } = require('+lib/error');
 
 /**
- * @api {get} /move Move file to serie season folder
+ * @api {post} /move Move file to serie season folder
  * @apiExample Example usage:
  *
  *     body:
@@ -54,16 +54,41 @@ router.post('/move', async ctx => {
   // Relative serie path to episode
   const serieFilePath = `${serie}/${seasonName}/${episodeFileName}`;
 
-  let fileCurrentPath = await moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite);
-  fileCurrentPath = await moveToSerieFolder(fileCurrentPath, serie, episodeFileName, serieFilePath, overwrite);
+  if (overwrite || canMove(serieFilePath, serie)) {
+    let fileCurrentPath = await moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite);
+    fileCurrentPath = await moveToSerieFolder(fileCurrentPath, serie, episodeFileName, serieFilePath, overwrite);
 
-  ctx.ok(fileCurrentPath);
+    ctx.ok(fileCurrentPath);
+  } else {
+    console.log(`Can't move (already exist, try overwrite)`);
+    return ctx.send(500, `Can't move (already exist, try overwrite)`);
+  }
 });
+
+function canMove(serieFilePath, serie) {
+  const jdlPath = __config.paths.jdownloader;
+  const movingPath = jdlPath.root + jdlPath.moving + serieFilePath;
+
+  try {
+    if (fs.existsSync(movingPath)) return false;
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
+  const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
+
+  try {
+    if (fs.existsSync(destinationFullPath)) return false;
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
+  return true;
+}
 
 // Move to 'Moving' folder
 async function moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite) {
   const jdlPath = __config.paths.jdownloader;
   const newFilepath = jdlPath.root + jdlPath.moving + serieFilePath;
+
   await moveFile(filepath, newFilepath, { overwrite });
   console.log(`file '${episodeFileName}' MOVED TO '${newFilepath}' (Moving folder)`);
 

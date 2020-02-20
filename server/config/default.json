@@ -17,7 +17,8 @@
         "series": {
           "A-O": "/Users/ifonny/Desktop/JDownloader/mnt/Plex 1/Series/Tout/",
           "P-Z": "/Users/ifonny/Desktop/JDownloader/mnt/Plex 2/Series/"
-        }
+        },
+        "films": "/Users/ifonny/Desktop/JDownloader/mnt/Plex 1/Films/"
       }
     }
   }
