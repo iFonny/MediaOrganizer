@@ -3,6 +3,11 @@ const pkg = require('./package')
 module.exports = {
   mode: 'spa',
 
+  server: {
+    port: 8000, // par défaut: 3000
+    host: '0.0.0.0' // par défaut: localhost
+  },
+
   /*
    ** Headers of the page
    */
@@ -44,7 +49,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: 'http://localhost:3001/api'
+    baseURL: 'http://localhost:8001/api'
     // See https://github.com/nuxt-community/axios-module#options
   },
 
