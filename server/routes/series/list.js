@@ -20,7 +20,7 @@ router.get('/list', async ctx => {
         .map(file => ({ name: file, fullPath: path.join(seriePaths['P-Z'], file) }))
     ];
 
-    return ctx.ok(series.sort((a, b) => a.name.localeCompare(b.name)));
+    return ctx.ok(series.filter(e => !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name)));
   } catch (error) {
     console.error(error);
     return ctx.send(500, error);

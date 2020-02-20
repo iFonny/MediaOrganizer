@@ -25,7 +25,7 @@ router.get('/jdl-list', async ctx => {
       numbersOfFiles: fs.statSync(file).isDirectory() ? fs.readdirSync(file).length : 0
     }));
 
-    return ctx.ok(files.sort((a, b) => a.path.localeCompare(b.path)));
+    return ctx.ok(files.filter(e => !e.name.startsWith('.')).sort((a, b) => a.path.localeCompare(b.path)));
   } catch (error) {
     console.error(error);
     return ctx.send(500, error);

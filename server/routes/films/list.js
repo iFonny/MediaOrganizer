@@ -14,7 +14,7 @@ router.get('/list', async ctx => {
 
     files = files.map(filepath => ({ name: path.basename(filepath), fullPath: filepath }));
 
-    return ctx.ok(files.sort((a, b) => a.name.localeCompare(b.name)));
+    return ctx.ok(files.filter(e => !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name)));
   } catch (error) {
     console.error(error);
     return ctx.send(500, error);
