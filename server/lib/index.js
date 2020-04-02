@@ -12,6 +12,9 @@ exports.getEpisodeInfo = function(filename) {
 
   filename = filename.toUpperCase();
 
+  if (filename.includes('FRENCH')) info.lang = 'VF';
+  if (filename.includes('SUBFRENCH')) info.lang = 'VOSTFR';
+
   if (filename.includes('VF')) info.lang = 'VF';
   if (filename.includes('VO')) info.lang = 'VO';
   if (filename.includes('VOST')) info.lang = 'VOST';
@@ -47,6 +50,9 @@ exports.getFilmInfo = function(filename) {
   if (year) info.year = year;
 
   filename = filename.toUpperCase();
+
+  if (filename.includes('FRENCH')) info.lang = 'VF';
+  if (filename.includes('SUBFRENCH')) info.lang = 'VOSTFR';
 
   if (filename.includes('VF')) info.lang = 'VF';
   if (filename.includes('VO')) info.lang = 'VO';
