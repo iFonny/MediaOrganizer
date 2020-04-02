@@ -15,8 +15,8 @@
       },
       "plex": {
         "series": {
-          "A-O": "/media/nico/Plex 1/Series/Tout/",
-          "P-Z": "/media/nico/Plex 2/Series/"
+          "A-M": "/media/nico/Plex 1/Series/Tout/",
+          "N-Z": "/media/nico/Plex 2/Series/"
         },
         "films": "/media/nico/Plex 1/Films/"
       }
