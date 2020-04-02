@@ -3,6 +3,7 @@
     <b-field grouped group-multiline>
       <div class="control">
         <b-switch v-model="hideFolders">Hide folders</b-switch>
+        <b-switch v-model="hidePart">Hide part</b-switch>
       </div>
     </b-field>
 
@@ -52,12 +53,15 @@ export default {
   },
 
   data() {
-    return { hideFolders: true }
+    return { hideFolders: true, hidePart: true }
   },
 
   computed: {
     filteredItems() {
-      return this.items.filter(e => (this.hideFolders ? (e.type === 'directory' ? false : true) : true))
+      let newItems = this.items.filter(e => (this.hideFolders ? (e.type === 'directory' ? false : true) : true))
+      newItems = newItems.filter(e => (this.hidePart ? (e.name.endsWith('.part') ? false : true) : true))
+
+      return newItems
     }
   },
 
