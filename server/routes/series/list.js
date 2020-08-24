@@ -11,13 +11,13 @@ router.get('/list', async ctx => {
   try {
     let series = [
       ...fs
-        .readdirSync(seriePaths['A-K'])
-        .filter(file => fs.statSync(path.join(seriePaths['A-K'], file)).isDirectory())
-        .map(file => ({ name: file, fullPath: path.join(seriePaths['A-K'], file) })),
+        .readdirSync(seriePaths['A-G'])
+        .filter(file => fs.statSync(path.join(seriePaths['A-G'], file)).isDirectory())
+        .map(file => ({ name: file, fullPath: path.join(seriePaths['A-G'], file) })),
       ...fs
-        .readdirSync(seriePaths['L-Z'])
-        .filter(file => fs.statSync(path.join(seriePaths['L-Z'], file)).isDirectory())
-        .map(file => ({ name: file, fullPath: path.join(seriePaths['L-Z'], file) }))
+        .readdirSync(seriePaths['H-Z'])
+        .filter(file => fs.statSync(path.join(seriePaths['H-Z'], file)).isDirectory())
+        .map(file => ({ name: file, fullPath: path.join(seriePaths['H-Z'], file) }))
     ];
 
     return ctx.ok(series.filter(e => !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name)));

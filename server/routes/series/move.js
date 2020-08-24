@@ -112,8 +112,8 @@ function getSerieAlphaPath(serieFilePath, serie) {
   const seriePath = __config.paths.plex.series;
   const serieFirstChar = serie.charAt(0).toLowerCase();
 
-  if (serieFirstChar.match(/[l-z]/i)) return `${seriePath['L-Z']}${serieFilePath}`;
-  else return `${seriePath['A-K']}${serieFilePath}`;
+  if (serieFirstChar.match(/[h-z]/i)) return `${seriePath['H-Z']}${serieFilePath}`;
+  else return `${seriePath['A-G']}${serieFilePath}`;
 }
 
 module.exports = router;
