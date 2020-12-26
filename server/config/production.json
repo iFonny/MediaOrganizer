@@ -8,15 +8,15 @@
     },
     "paths": {
       "jdownloader": {
-        "root": "/volume1/Jdownloader/",
+        "root": "/volume3/JDownloader/",
         "series": "Series/",
         "films": "Films/",
         "moving": "Moving/"
       },
       "plex": {
         "series": {
-          "A-G": "/volume1/Plex 1/Test/",
-          "H-Z": "/volume1/Plex 1/Test/"
+          "A-G": "/volume1/Plex 1/Series/",
+          "H-Z": "/volume2/Plex 2/Series/"
         },
         "films": "/volume1/Plex 1/Films/"
       }
