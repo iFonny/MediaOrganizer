@@ -1,4 +1,7 @@
 #!/bin/bash
 
-cd client && sudo pm2 start yarn --interpreter bash --name MOClient -- production && cd ..
-cd server && sudo pm2 start yarn --interpreter bash --name MOServer -- production && cd ..
+# OLD: cd client && sudo pm2 start yarn --interpreter bash --name MOClient -- production && cd ..
+# OLD: cd server && sudo pm2 start yarn --interpreter bash --name MOServer -- production && cd ..
+
+cd client && pm2 start yarn --name MOClient -- production && cd ..
+cd server && pm2 start yarn --name MOServer -- production && cd ..
