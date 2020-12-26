@@ -8,17 +8,17 @@
     },
     "paths": {
       "jdownloader": {
-        "root": "/home/nico/Bureau/JDownloader/",
+        "root": "/volume1/Jdownloader/",
         "series": "Series/",
         "films": "Films/",
         "moving": "Moving/"
       },
       "plex": {
         "series": {
-          "A-G": "/media/nico/Plex 1/Series/Tout/",
-          "H-Z": "/media/nico/Plex 2/Series/"
+          "A-G": "/volume1/Plex 1/Test/",
+          "H-Z": "/volume1/Plex 1/Test/"
         },
-        "films": "/media/nico/Plex 1/Films/"
+        "films": "/volume1/Plex 1/Films"
       }
     }
   }
