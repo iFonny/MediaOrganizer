@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo pm2 stop MOClient
-sudo pm2 stop MOServer
+pm2 stop MOClient
+pm2 stop MOServer
