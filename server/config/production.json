@@ -15,8 +15,8 @@
       },
       "plex": {
         "series": {
-          "A-G": "/volume1/Plex 1/Series/",
-          "H-Z": "/volume2/Plex 2/Series/"
+          "A-L": "/volume1/Plex 1/Series/",
+          "M-Z": "/volume2/Plex 2/Series/"
         },
         "films": "/volume1/Plex 1/Films/"
       }
