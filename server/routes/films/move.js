@@ -34,6 +34,7 @@ router.post('/move', async ctx => {
     .notEmpty()
     .toUp().value;
   const UHD = ctx.checkBody('UHD').in([true, false]).value;
+  const moveToHR = ctx.checkBody('moveToHR').in([true, false]).value;
   const overwrite = ctx
     .checkBody('overwrite')
     .default(false)
@@ -52,7 +53,7 @@ router.post('/move', async ctx => {
 
   if (overwrite || canMove(filmFileName)) {
     let fileCurrentPath = await moveToMovingFolder(filepath, filmFileName, overwrite);
-    fileCurrentPath = await moveToFilmFolder(fileCurrentPath, filmFileName, overwrite);
+    fileCurrentPath = await moveToFilmFolder(fileCurrentPath, filmFileName, overwrite, moveToHR);
 
     ctx.ok(fileCurrentPath);
   } else {
@@ -92,8 +93,9 @@ async function moveToMovingFolder(filepath, filmFileName, overwrite) {
 }
 
 // Move to film folder in HDD
-async function moveToFilmFolder(filepath, filmFileName, overwrite) {
-  const destinationFullPath = __config.paths.plex.films + filmFileName;
+async function moveToFilmFolder(filepath, filmFileName, overwrite, moveToHR) {
+  const filmsPath = moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films;
+  const destinationFullPath = filmsPath + filmFileName;
 
   // Move to film folder in HDD
   moveFile(filepath, destinationFullPath, { overwrite });

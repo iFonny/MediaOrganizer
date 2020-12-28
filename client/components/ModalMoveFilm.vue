@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: auto; min-width: 58vw;">
+  <div class="modal-card" style="width: auto; min-width: 58vw">
     <header class="modal-card-head">
       <p class="modal-card-title"><strong>Move</strong> {{ name }}</p>
     </header>
@@ -23,7 +23,10 @@
       </b-field>
 
       <b-field label="Resolution">
-        <b-checkbox v-model="moveFilmForm.UHD" type="is-info">UHD</b-checkbox>
+        <div class="block">
+          <b-checkbox v-model="moveFilmForm.UHD" type="is-info">UHD</b-checkbox>
+          <b-checkbox v-model="moveFilmForm.moveToHR" type="is-warning">Move to 'Films (HR)'</b-checkbox>
+        </div>
       </b-field>
 
       <p>
@@ -92,6 +95,7 @@ export default {
         year: null,
         lang: null,
         UHD: false,
+        moveToHR: false,
         overwrite: false
       }
     }
