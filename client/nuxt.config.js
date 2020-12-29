@@ -49,7 +49,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: 'http://10.0.0.34:8001/api' // 'http://localhost:8001/api'
+    baseURL: 'http://localhost:8001/api' //  'http://10.0.0.34:8001/api' // 'http://localhost:8001/api'
     // See https://github.com/nuxt-community/axios-module#options
   },
 

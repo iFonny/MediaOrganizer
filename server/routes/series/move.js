@@ -48,7 +48,7 @@ router.post('/move', async ctx => {
   const seasonString = season.toString().length === 1 ? `S0${season}` : `S${season}`;
   const episodeString = episode.toString().length === 1 ? `E0${episode}` : `E${episode}`;
   const serieWithoutYear = serie.replace(/(\(\d{4}\))/gim, '').trim();
-  const seasonName = `Saison ${season} (${lang})`;
+  const seasonName = season === 0 ? 'Specials' : `Saison ${season} (${lang})`;
   const episodeFileName = `${serieWithoutYear} ${seasonString}${episodeString}${extension}`;
 
   // Relative serie path to episode

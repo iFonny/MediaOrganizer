@@ -28,11 +28,11 @@
           </b-field>
 
           <b-field label="Season *">
-            <b-numberinput v-model="moveEpisodeForm.season" min="1" max="999" required expanded />
+            <b-numberinput v-model="moveEpisodeForm.season" min="0" max="999" required expanded />
           </b-field>
 
           <b-field label="Episode *">
-            <b-numberinput v-model="moveEpisodeForm.episode" min="1" max="999" required expanded />
+            <b-numberinput v-model="moveEpisodeForm.episode" min="0" max="999" required expanded />
           </b-field>
 
           <b-field label="Lang *">
@@ -134,8 +134,8 @@ export default {
         !this.buttonLoading &&
         this.moveEpisodeForm.filepath &&
         this.moveEpisodeForm.serie &&
-        this.moveEpisodeForm.season &&
-        this.moveEpisodeForm.episode &&
+        this.moveEpisodeForm.season >= 0 &&
+        this.moveEpisodeForm.episode >= 0 &&
         this.moveEpisodeForm.lang
       )
     }
