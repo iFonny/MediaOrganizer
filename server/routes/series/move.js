@@ -4,7 +4,7 @@ const fs = require('fs');
 const moveFile = require('move-file');
 
 const { BadRequest } = require('+lib/error');
-const { getInfoListAsync } = require('+lib/syno_async');
+const { getInfoListAsync, startCopyMoveAsync, createFolderAsync } = require('+lib/syno_async');
 
 /**
  * @api {post} /move Move file to serie season folder
