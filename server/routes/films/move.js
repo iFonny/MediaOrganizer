@@ -71,7 +71,7 @@ router.post('/move', async ctx => {
 });
 
 async function canMoveSyno(filmFileName, moveToHR) {
-  const jdlPath = __config.syno.paths.jdownloader;
+  const jdlPath = __config.paths.jdownloader;
   const movingPath = jdlPath.root + jdlPath.moving + '/' + filmFileName; // Syno path
 
   try {
@@ -81,7 +81,7 @@ async function canMoveSyno(filmFileName, moveToHR) {
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
-  const destinationFullPath = (moveToHR ? __config.syno.paths.plex.filmsHR : __config.syno.paths.plex.films) + '/' + filmFileName;
+  const destinationFullPath = (moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films) + '/' + filmFileName; // Syno path
 
   try {
     const { files } = await getInfoListAsync({ path: destinationFullPath });
@@ -95,7 +95,7 @@ async function canMoveSyno(filmFileName, moveToHR) {
 
 // Move to 'Moving' folder
 async function moveToMovingFolder(filepath, filmFileName, overwrite) {
-  const jdlPath = __config.syno.paths.jdownloader;
+  const jdlPath = __config.paths.jdownloader;
   const newFilepath = jdlPath.volume + jdlPath.root + jdlPath.moving + '/' + filmFileName;
 
   await moveFile(filepath, newFilepath, { overwrite });
@@ -106,14 +106,15 @@ async function moveToMovingFolder(filepath, filmFileName, overwrite) {
 
 // Move to film folder in HDD
 async function moveToFilmFolderSyno(filepath, filmFileName, overwrite, moveToHR) {
-  // Transform to have sharesd folder as root for synology
-  const filepathSyno = filepath.replace(__config.syno.paths.jdownloader.volume, '');
-  const filmsPath = moveToHR ? __config.syno.paths.plex.filmsHR : __config.syno.paths.plex.films;
+  // Transform to have shared folder as root for synology
+  const filepathSyno = filepath.replace(__config.paths.jdownloader.volume, '');
+
+  const filmsPath = moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films; // Syno path
 
   // Move to film folder in HDD
   const { taskid } = await startCopyMoveAsync({ path: filepathSyno, dest_folder_path: filmsPath, overwrite, remove_src: true });
 
-  const destinationFullPath = filmsPath + '/' + filmFileName;
+  const destinationFullPath = `${filmsPath}/${filmFileName}`;
   console.log(`MOVING '${filmFileName}' TO '${destinationFullPath}'... (taskid: ${taskid})`);
   return destinationFullPath;
 }

@@ -37,8 +37,8 @@ router.post('/move-to-jdl', async ctx => {
   const filename = path.basename(filepath);
 
   const jdlPath = __config.paths.jdownloader;
-  const jdlSeriePath = jdlPath.root + jdlPath.series + filename;
-  const jdlFilmsPath = jdlPath.root + jdlPath.films + filename;
+  const jdlSeriePath = jdlPath.volume + jdlPath.root + jdlPath.series + '/' + filename;
+  const jdlFilmsPath = jdlPath.volume + jdlPath.root + jdlPath.films + '/' + filename;
   const jdlDestinationPath = destination === 'series' ? jdlSeriePath : destination === 'films' ? jdlFilmsPath : null;
 
   if (jdlDestinationPath && (overwrite || canMove(jdlDestinationPath))) {

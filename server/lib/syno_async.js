@@ -15,3 +15,12 @@ exports.startCopyMoveAsync = function(params) {
     });
   });
 };
+
+exports.createFolderAsync = function(params) {
+  return new Promise((resolve, reject) => {
+    __syno.fs.createFolder(params, (error, data) => {
+      if (error) return reject(error);
+      else return resolve(data);
+    });
+  });
+};

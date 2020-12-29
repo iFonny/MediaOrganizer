@@ -8,18 +8,23 @@
     },
     "paths": {
       "jdownloader": {
-        "root": "/volume3/JDownloader/",
-        "series": "Series/",
-        "films": "Films/",
-        "moving": "Moving/"
+        "volume": "/volume3",
+        "root": "/JDownloader",
+        "series": "/Series",
+        "films": "/Films",
+        "moving": "/Moving"
       },
       "plex": {
         "series": {
-          "A-L": "/volume1/Plex 1/Series/",
-          "M-Z": "/volume2/Plex 2/Series/"
+          "volumeA-L": "/volume1",
+          "A-L": "/Plex 1/Series",
+          "volumeM-Z": "/volume2",
+          "M-Z": "/Plex 2/Series"
         },
-        "films": "/volume1/Plex 1/Films/",
-        "filmsHR": "/volume3/Plex 3/Films (HR)/"
+        "volumeFilms": "/volume1",
+        "films": "/Plex 1/Films",
+        "volumeFilmsHR": "/volume3",
+        "filmsHR": "/Plex 3/Films (HR)"
       }
     },
     "syno": {
