@@ -121,7 +121,7 @@ async function moveToSerieFolderSyno(filepath, serie, episodeFileName, seasonNam
   const destSerieSeasonFolderSyno = `${destSerieFolderSyno}/${seasonName}`;
 
   // Create folder if doesn't exist
-  await createFolderAsync({ folder_path: destinationSerieFolderSyno, force_parent: true, name: seasonName });
+  await createFolderAsync({ folder_path: destSerieFolderSyno, force_parent: true, name: seasonName });
 
   // Move to film folder in HDD
   const { taskid } = await startCopyMoveAsync({ path: filepathSyno, dest_folder_path: destSerieSeasonFolderSyno, overwrite, remove_src: true });
