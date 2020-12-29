@@ -65,6 +65,10 @@ router.post('/move', async ctx => {
     } catch (error) {
       console.log(error);
       console.log(`Can't move (error CopyMove Synology)`);
+
+      // If fail, move the file back to the original place
+      await moveFile(fileCurrentPath, filepath);
+
       return ctx.send(500, `Can't move (error CopyMove Synology)`);
     }
   } else {

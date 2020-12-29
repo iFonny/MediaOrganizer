@@ -182,12 +182,12 @@ export default {
       } catch (error) {
         this.$buefy.notification.open({
           duration: 5000,
-          message: `Error: can't move episode`,
+          message: error.response ? `Error: ${error.response.data.message}` : `Error: can't move episode (unknown)`,
           position: 'is-top',
           type: 'is-danger',
           hasIcon: true
         })
-        console.error(error)
+        console.error(error.response.data)
       }
 
       this.buttonLoading = false
