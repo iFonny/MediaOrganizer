@@ -21,6 +21,11 @@
         "films": "/Users/ifonny/Desktop/JDownloader/mnt/Plex 1/Films/",
         "filmsHR": "/Users/ifonny/Desktop/JDownloader/mnt/Plex 1/Films (HR)/"
       }
+    },
+    "syno": {
+      "host": "plex-nas.local",
+      "account": "ACCOUNT",
+      "passwd": "PASSWORD"
     }
   }
 }

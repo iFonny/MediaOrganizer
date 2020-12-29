@@ -21,6 +21,11 @@
         "films": "/volume1/Plex 1/Films/",
         "filmsHR": "/volume3/Plex 3/Films (HR)/"
       }
+    },
+    "syno": {
+      "host": "localhost",
+      "account": "ACCOUNT",
+      "passwd": "PASSWORD"
     }
   }
 }
