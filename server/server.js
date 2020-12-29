@@ -13,6 +13,7 @@ const Helmet = require('koa-helmet');
 const respond = require('koa-respond');
 const koaStatic = require('koa-static');
 const config = require('config');
+const Syno = require('syno');
 // DELETE const mongoose = require('mongoose');
 
 const errorHandler = require('+lib/error_handler');
@@ -41,6 +42,25 @@ mongoose.connection.on("error", err => {
 mongoose.connection.once("open", function() {
 	console.log(`Mongodb connected (port:${dbConfig.port}) [${__config.env}]`);
 }); */
+
+//=======================================================================//
+//     Synology API                                                      //
+//=======================================================================//
+
+global.__syno = new Syno({
+  // Requests protocol : 'http' or 'https' (default: http)
+  protocol: 'http',
+  // DSM host : ip, domain name (default: localhost)
+  host: __config.syno.host,
+  // DSM port : port number (default: 5000)
+  port: '5000',
+  // DSM User account (required)
+  account: __config.syno.account,
+  // DSM User password (required)
+  passwd: __config.syno.passwd
+  // DSM API version (optional, default: 6.0.2)
+  // apiVersion: '6.0.2'
+});
 
 //=======================================================================//
 //     Koa                                                               //

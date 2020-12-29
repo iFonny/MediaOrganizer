@@ -9,7 +9,7 @@ const glob = require('glob');
  */
 router.get('/jdl-list', async ctx => {
   const jdlPath = __config.paths.jdownloader;
-  const filmsPath = jdlPath.root + jdlPath.films;
+  const filmsPath = jdlPath.volume + jdlPath.root + jdlPath.films;
 
   try {
     let files = glob.sync(filmsPath + '/**/*', { dot: true });

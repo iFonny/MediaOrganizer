@@ -4,6 +4,7 @@ const fs = require('fs');
 const moveFile = require('move-file');
 
 const { BadRequest } = require('+lib/error');
+const { getInfoListAsync } = require('+lib/syno_async');
 
 /**
  * @api {post} /move Move file to serie season folder
@@ -52,32 +53,43 @@ router.post('/move', async ctx => {
   const episodeFileName = `${serieWithoutYear} ${seasonString}${episodeString}${extension}`;
 
   // Relative serie path to episode
-  const serieFilePath = `${serie}/${seasonName}/${episodeFileName}`;
+  const serieFilePath = `/${serie}/${seasonName}/${episodeFileName}`;
 
-  if (overwrite || canMove(serieFilePath, serie)) {
+  if (overwrite || (await canMoveSyno(serieFilePath, serie))) {
     let fileCurrentPath = await moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite);
-    fileCurrentPath = await moveToSerieFolder(fileCurrentPath, serie, episodeFileName, serieFilePath, overwrite);
 
-    ctx.ok(fileCurrentPath);
+    try {
+      fileCurrentPath = await moveToSerieFolderSyno(fileCurrentPath, serie, episodeFileName, seasonName, overwrite);
+
+      return ctx.ok(fileCurrentPath);
+    } catch (error) {
+      console.log(error);
+      console.log(`Can't move (error CopyMove Synology)`);
+      return ctx.send(500, `Can't move (error CopyMove Synology)`);
+    }
   } else {
     console.log(`Can't move (already exist, try overwrite)`);
     return ctx.send(500, `Can't move (already exist, try overwrite)`);
   }
 });
 
-function canMove(serieFilePath, serie) {
+async function canMoveSyno(serieFilePath, serie) {
   const jdlPath = __config.paths.jdownloader;
-  const movingPath = jdlPath.root + jdlPath.moving + serieFilePath;
+  const movingPath = jdlPath.root + jdlPath.moving + serieFilePath; // Syno path
 
   try {
-    if (fs.existsSync(movingPath)) return false;
+    const { files } = await getInfoListAsync({ path: movingPath });
+    if (files[0].code != 408) return false;
+
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
-  const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
+  const destinationFullPathSyno = getSerieAlphaPathSyno(serie) + serieFilePath;
 
   try {
-    if (fs.existsSync(destinationFullPath)) return false;
+    const { files } = await getInfoListAsync({ path: destinationFullPathSyno });
+    if (files[0].code != 408) return false;
+
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
@@ -87,7 +99,7 @@ function canMove(serieFilePath, serie) {
 // Move to 'Moving' folder
 async function moveToMovingFolder(filepath, episodeFileName, serieFilePath, overwrite) {
   const jdlPath = __config.paths.jdownloader;
-  const newFilepath = jdlPath.root + jdlPath.moving + serieFilePath;
+  const newFilepath = jdlPath.volume + jdlPath.root + jdlPath.moving + serieFilePath;
 
   await moveFile(filepath, newFilepath, { overwrite });
   console.log(`file '${episodeFileName}' MOVED TO '${newFilepath}' (Moving folder)`);
@@ -96,24 +108,32 @@ async function moveToMovingFolder(filepath, episodeFileName, serieFilePath, over
 }
 
 // Move to serie folder in HDD
-async function moveToSerieFolder(filepath, serie, episodeFileName, serieFilePath, overwrite) {
+async function moveToSerieFolderSyno(filepath, serie, episodeFileName, seasonName, overwrite) {
+  // Transform to have shared folder as root for synology
+  const filepathSyno = filepath.replace(__config.paths.jdownloader.volume, '');
+
   // Add path to HDD (en fonction de l'ordre alpha)
-  const destinationFullPath = getSerieAlphaPath(serieFilePath, serie);
+  const destSerieFolderSyno = `${getSerieAlphaPathSyno(serie)}/${serie}`;
+  const destSerieSeasonFolderSyno = `${destSerieFolderSyno}/${seasonName}`;
 
-  // Move to serie folder in HDD
-  moveFile(filepath, destinationFullPath, { overwrite });
-  console.log(`MOVING '${episodeFileName}' TO '${destinationFullPath}'...`);
+  // Create folder if doesn't exist
+  await createFolderAsync({ folder_path: destinationSerieFolderSyno, force_parent: true, name: seasonName });
 
+  // Move to film folder in HDD
+  const { taskid } = await startCopyMoveAsync({ path: filepathSyno, dest_folder_path: destSerieSeasonFolderSyno, overwrite, remove_src: true });
+
+  const destinationFullPath = `${destSerieSeasonFolderSyno}/${episodeFileName}`;
+  console.log(`MOVING '${episodeFileName}' TO '${destinationFullPath}'... (taskid: ${taskid})`);
   return destinationFullPath;
 }
 
 // Add path to HDD (alpha)
-function getSerieAlphaPath(serieFilePath, serie) {
+function getSerieAlphaPathSyno(serie) {
   const seriePath = __config.paths.plex.series;
   const serieFirstChar = serie.charAt(0).toLowerCase();
 
-  if (serieFirstChar.match(/[m-z]/i)) return `${seriePath['M-Z']}${serieFilePath}`;
-  else return `${seriePath['A-L']}${serieFilePath}`;
+  if (serieFirstChar.match(/[m-z]/i)) return seriePath['M-Z'];
+  else return seriePath['A-L'];
 }
 
 module.exports = router;

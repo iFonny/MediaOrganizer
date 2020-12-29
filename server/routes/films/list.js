@@ -7,7 +7,7 @@ var readdir = require('recursive-readdir');
  * @apiSampleRequest /api/films/list
  */
 router.get('/list', async ctx => {
-  const filmPath = __config.paths.plex.films;
+  const filmPath = __config.paths.plex.volumeFilms + __config.paths.plex.films;
 
   try {
     let files = await readdir(filmPath);

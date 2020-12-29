@@ -7,17 +7,19 @@ const path = require('path');
  */
 router.get('/list', async ctx => {
   const seriePaths = __config.paths.plex.series;
+  const seriePath_1 = seriePaths['volumeA-L'] + seriePaths['A-L'];
+  const seriePath_2 = seriePaths['volumeM-Z'] + seriePaths['M-Z'];
 
   try {
     let series = [
       ...fs
-        .readdirSync(seriePaths['A-L'])
-        .filter(file => fs.statSync(path.join(seriePaths['A-L'], file)).isDirectory())
-        .map(file => ({ name: file, fullPath: path.join(seriePaths['A-L'], file) })),
+        .readdirSync(seriePath_1)
+        .filter(file => fs.statSync(path.join(seriePath_1, file)).isDirectory())
+        .map(file => ({ name: file, fullPath: path.join(seriePath_1, file) })),
       ...fs
-        .readdirSync(seriePaths['M-Z'])
-        .filter(file => fs.statSync(path.join(seriePaths['M-Z'], file)).isDirectory())
-        .map(file => ({ name: file, fullPath: path.join(seriePaths['M-Z'], file) }))
+        .readdirSync(seriePath_2)
+        .filter(file => fs.statSync(path.join(seriePath_2, file)).isDirectory())
+        .map(file => ({ name: file, fullPath: path.join(seriePath_2, file) }))
     ];
 
     return ctx.ok(series.filter(e => !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name)));

@@ -4,6 +4,7 @@ const fs = require('fs');
 const moveFile = require('move-file');
 
 const { BadRequest } = require('+lib/error');
+const { getInfoListAsync, startCopyMoveAsync } = require('+lib/syno_async');
 
 /**
  * @api {post} /move Move file to plex film folder
@@ -51,30 +52,41 @@ router.post('/move', async ctx => {
   const extension = path.extname(filepath);
   const filmFileName = `${name} (${year}) (${lang})${UHD ? ` (UHD)` : ''}${extension}`;
 
-  if (overwrite || canMove(filmFileName)) {
+  if (overwrite || (await canMoveSyno(filmFileName, moveToHR))) {
     let fileCurrentPath = await moveToMovingFolder(filepath, filmFileName, overwrite);
-    fileCurrentPath = await moveToFilmFolder(fileCurrentPath, filmFileName, overwrite, moveToHR);
 
-    ctx.ok(fileCurrentPath);
+    try {
+      fileCurrentPath = await moveToFilmFolderSyno(fileCurrentPath, filmFileName, overwrite, moveToHR);
+
+      return ctx.ok(fileCurrentPath);
+    } catch (error) {
+      console.log(error);
+      console.log(`Can't move (error CopyMove Synology)`);
+      return ctx.send(500, `Can't move (error CopyMove Synology)`);
+    }
   } else {
     console.log(`Can't move (already exist, try overwrite)`);
     return ctx.send(500, `Can't move (already exist, try overwrite)`);
   }
 });
 
-function canMove(filmFileName) {
+async function canMoveSyno(filmFileName, moveToHR) {
   const jdlPath = __config.paths.jdownloader;
-  const movingPath = jdlPath.root + jdlPath.moving + filmFileName;
+  const movingPath = jdlPath.root + jdlPath.moving + '/' + filmFileName; // Syno path
 
   try {
-    if (fs.existsSync(movingPath)) return false;
+    const { files } = await getInfoListAsync({ path: movingPath });
+    if (files[0].code != 408) return false;
+
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
-  const destinationFullPath = __config.paths.plex.films + filmFileName;
+  const destinationFullPath = (moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films) + '/' + filmFileName; // Syno path
 
   try {
-    if (fs.existsSync(destinationFullPath)) return false;
+    const { files } = await getInfoListAsync({ path: destinationFullPath });
+    if (files[0].code != 408) return false;
+
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
@@ -84,7 +96,7 @@ function canMove(filmFileName) {
 // Move to 'Moving' folder
 async function moveToMovingFolder(filepath, filmFileName, overwrite) {
   const jdlPath = __config.paths.jdownloader;
-  const newFilepath = jdlPath.root + jdlPath.moving + filmFileName;
+  const newFilepath = jdlPath.volume + jdlPath.root + jdlPath.moving + '/' + filmFileName;
 
   await moveFile(filepath, newFilepath, { overwrite });
   console.log(`file '${filmFileName}' MOVED TO '${newFilepath}' (Moving folder)`);
@@ -93,14 +105,17 @@ async function moveToMovingFolder(filepath, filmFileName, overwrite) {
 }
 
 // Move to film folder in HDD
-async function moveToFilmFolder(filepath, filmFileName, overwrite, moveToHR) {
-  const filmsPath = moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films;
-  const destinationFullPath = filmsPath + filmFileName;
+async function moveToFilmFolderSyno(filepath, filmFileName, overwrite, moveToHR) {
+  // Transform to have shared folder as root for synology
+  const filepathSyno = filepath.replace(__config.paths.jdownloader.volume, '');
+
+  const filmsPath = moveToHR ? __config.paths.plex.filmsHR : __config.paths.plex.films; // Syno path
 
   // Move to film folder in HDD
-  moveFile(filepath, destinationFullPath, { overwrite });
-  console.log(`MOVING '${filmFileName}' TO '${destinationFullPath}'...`);
+  const { taskid } = await startCopyMoveAsync({ path: filepathSyno, dest_folder_path: filmsPath, overwrite, remove_src: true });
 
+  const destinationFullPath = `${filmsPath}/${filmFileName}`;
+  console.log(`MOVING '${filmFileName}' TO '${destinationFullPath}'... (taskid: ${taskid})`);
   return destinationFullPath;
 }
 

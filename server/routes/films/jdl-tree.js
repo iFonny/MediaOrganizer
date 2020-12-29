@@ -8,7 +8,7 @@ const dirTree = require('directory-tree');
  */
 router.get('/jdl-tree', async ctx => {
   const jdlPath = __config.paths.jdownloader;
-  const path = jdlPath.root + jdlPath.films;
+  const path = jdlPath.volume + jdlPath.root + jdlPath.films;
 
   try {
     const tree = dirTree(path);
