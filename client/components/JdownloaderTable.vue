@@ -4,6 +4,7 @@
       <div class="control">
         <b-switch v-model="hideFolders">Hide folders</b-switch>
         <b-switch v-model="hidePart">Hide part</b-switch>
+        <b-switch v-model="hideZip">Hide zip</b-switch>
       </div>
     </b-field>
 
@@ -53,13 +54,15 @@ export default {
   },
 
   data() {
-    return { hideFolders: true, hidePart: true }
+    return { hideFolders: true, hidePart: true, hideZip: true }
   },
 
   computed: {
     filteredItems() {
       let newItems = this.items.filter(e => (this.hideFolders ? (e.type === 'directory' ? false : true) : true))
       newItems = newItems.filter(e => (this.hidePart ? (e.name.endsWith('.part') ? false : true) : true))
+      newItems = newItems.filter(e => (this.hideZip ? (e.name.endsWith('.zip') ? false : true) : true))
+      newItems = newItems.filter(e => (this.hideZip ? (e.name.endsWith('.rar') ? false : true) : true))
 
       return newItems
     }
