@@ -12,8 +12,7 @@ router.get('/get-episode-info', async ctx => {
   const filename = ctx
     .checkQuery('filename')
     .notEmpty()
-    .trim()
-    .toUp().value;
+    .trim().value;
 
   if (ctx.errors) throw new BadRequest(ctx.errors);
 

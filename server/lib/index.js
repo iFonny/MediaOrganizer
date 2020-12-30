@@ -5,10 +5,13 @@ exports.getEpisodeInfo = function(filename) {
   filename = path.basename(filename);
 
   const info = {
+    serie: null,
     season: null,
     episode: null,
     lang: null
   };
+  const { title } = ptt.parse(filename);
+  if (title) info.serie = title;
 
   filename = filename.toUpperCase();
 

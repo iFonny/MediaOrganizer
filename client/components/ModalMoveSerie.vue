@@ -143,6 +143,9 @@ export default {
 
   async beforeMount() {
     try {
+      const { serie } = await this.$axios.$get('/series/get-episode-info', { params: { filename: this.fullPath } })
+      if (serie) this.searchQuery = serie
+
       this.allSeries = await this.$axios.$get('/series/list')
     } catch (error) {
       console.log(error)
