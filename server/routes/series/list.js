@@ -7,8 +7,8 @@ const path = require('path');
  */
 router.get('/list', async ctx => {
   const seriePaths = __config.paths.plex.series;
-  const seriePath_1 = seriePaths['volumeA-L'] + seriePaths['A-L'];
-  const seriePath_2 = seriePaths['volumeM-Z'] + seriePaths['M-Z'];
+  const seriePath_1 = seriePaths['volumeA-F'] + seriePaths['A-F'];
+  const seriePath_2 = seriePaths['volumeG-S'] + seriePaths['G-S'];
 
   try {
     let series = [

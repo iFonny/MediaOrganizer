@@ -16,10 +16,10 @@
       },
       "plex": {
         "series": {
-          "volumeA-L": "/volume1",
-          "A-L": "/Plex 1/Series",
-          "volumeM-Z": "/volume2",
-          "M-Z": "/Plex 2/Series"
+          "volumeA-F": "/volume1",
+          "A-F": "/Plex 1/Series",
+          "volumeG-S": "/volume2",
+          "G-S": "/Plex 2/Series"
         },
         "volumeFilms": "/volume1",
         "films": "/Plex 1/Films",
