@@ -19,7 +19,9 @@
           "volumeA-F": "/Users/ifonny/Desktop/JDownloader/mnt",
           "A-F": "/Plex 1/Series",
           "volumeG-S": "/Users/ifonny/Desktop/JDownloader/mnt",
-          "G-S": "/Plex 2/Series"
+          "G-S": "/Plex 2/Series",
+          "volumeT-Z": "/Users/ifonny/Desktop/JDownloader/mnt",
+          "T-Z": "/Plex 3/Series"
         },
         "volumeFilms": "/Users/ifonny/Desktop/JDownloader/mnt",
         "films": "/Plex 1/Films",

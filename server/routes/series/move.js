@@ -136,8 +136,9 @@ function getSerieAlphaPathSyno(serie) {
   const seriePath = __config.paths.plex.series;
   const serieFirstChar = serie.charAt(0).toLowerCase();
 
-  if (serieFirstChar.match(/[g-s]/i)) return seriePath['G-S'];
-  else return seriePath['A-F'];
+  if (serieFirstChar.match(/[a-f]/i)) return seriePath['A-F'];
+  else if (serieFirstChar.match(/[g-s]/i)) return seriePath['G-S'];
+  else return seriePath['T-Z'];
 }
 
 module.exports = router;

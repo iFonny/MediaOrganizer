@@ -19,7 +19,9 @@
           "volumeA-F": "/volume1",
           "A-F": "/Plex 1/Series",
           "volumeG-S": "/volume2",
-          "G-S": "/Plex 2/Series"
+          "G-S": "/Plex 2/Series",
+          "volumeT-Z": "/volume3",
+          "T-Z": "/Plex 3/Series"
         },
         "volumeFilms": "/volume1",
         "films": "/Plex 1/Films",

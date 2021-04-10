@@ -9,6 +9,7 @@ router.get('/list', async ctx => {
   const seriePaths = __config.paths.plex.series;
   const seriePath_1 = seriePaths['volumeA-F'] + seriePaths['A-F'];
   const seriePath_2 = seriePaths['volumeG-S'] + seriePaths['G-S'];
+  const seriePath_3 = seriePaths['volumeT-Z'] + seriePaths['T-Z'];
 
   try {
     let series = [
@@ -19,7 +20,11 @@ router.get('/list', async ctx => {
       ...fs
         .readdirSync(seriePath_2)
         .filter(file => fs.statSync(path.join(seriePath_2, file)).isDirectory())
-        .map(file => ({ name: file, fullPath: path.join(seriePath_2, file) }))
+        .map(file => ({ name: file, fullPath: path.join(seriePath_2, file) })),
+      ...fs
+        .readdirSync(seriePath_3)
+        .filter(file => fs.statSync(path.join(seriePath_3, file)).isDirectory())
+        .map(file => ({ name: file, fullPath: path.join(seriePath_3, file) }))
     ];
 
     return ctx.ok(series.filter(e => !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name)));
