@@ -17,7 +17,8 @@ const { getInfoListAsync, startCopyMoveAsync, createFolderAsync } = require('+li
  *        season: 6,
  *        episode: 15,
  *        lang: 'MULTI',
- *        overwrite: 'false' (optional)
+ *        overwrite: 'false' (optional),
+ *        shouldFormatName: 'false' (optional)
  *     }
  *
  * @apiSampleRequest /api/series/move
@@ -36,6 +37,10 @@ router.post('/move', async ctx => {
     .checkBody('overwrite')
     .default(false)
     .in([true, false]).value;
+  const shouldFormatName = ctx
+    .checkBody('shouldFormatName')
+    .default(false)
+    .in([true, false]).value;
 
   if (ctx.errors) throw new BadRequest(ctx.errors);
 
@@ -50,7 +55,9 @@ router.post('/move', async ctx => {
   const episodeString = episode.toString().length === 1 ? `E0${episode}` : `E${episode}`;
   const serieWithoutYear = serie.replace(/(\(\d{4}\))/gim, '').trim();
   const seasonName = season === 0 ? 'Specials' : `Saison ${season} (${lang})`;
-  const episodeFileName = path.basename(filepath); // Use the original file name instead of generating a new one
+  const episodeFileName = shouldFormatName
+    ? `${serieWithoutYear} ${seasonString}${episodeString}${extension}` // Clean name (ex: Brooklyn Nine-Nine S06E15) but no details (like: x265, 1080p, etc)
+    : path.basename(filepath); // Use the original file name (ex: Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS)
 
   // Relative serie path to episode
   const serieFilePath = `/${serie}/${seasonName}/${episodeFileName}`;
