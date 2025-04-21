@@ -8,7 +8,7 @@ const rimraf = require('rimraf');
  *
  *     body:
  *     {
- *        filepath: '/Users/ifonny/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv',
+ *        filepath: '/Users/nthouch/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv',
  *     }
  * @apiSampleRequest /api/files/delete
  */

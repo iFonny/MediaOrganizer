@@ -12,7 +12,7 @@ const { getInfoListAsync, startCopyMoveAsync } = require('+lib/syno_async');
  *
  *     body:
  *     {
- *        filepath: '/Users/ifonny/Desktop/JDownloader/Films/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
+ *        filepath: '/Users/nthouch/Desktop/JDownloader/Films/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
  *        name: 'Jojo Rabbit',
  *        year: 2019,
  *        lang: 'MULTI',

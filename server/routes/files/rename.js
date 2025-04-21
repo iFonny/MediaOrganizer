@@ -10,7 +10,7 @@ const { BadRequest } = require('+lib/error');
  *
  *     body:
  *     {
- *        filepath: '/Users/ifonny/Desktop/JDownloader/Moving/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
+ *        filepath: '/Users/nthouch/Desktop/JDownloader/Moving/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
  *        newName: 'Jojo.Rabbit',
  *     }
  *
@@ -30,9 +30,9 @@ router.post('/rename', async ctx => {
       fs.renameSync(filepath, newFullPath);
 
       ctx.ok(newFullPath);
-    } else return ctx.send(400, `filepath doesn't exit`);
+    } else return ctx.send(400, `filepath doesn't exist`);
   } catch (e) {
-    return ctx.send(400, `filepath doesn't exit`);
+    return ctx.send(400, `filepath doesn't exist`);
   }
 });
 

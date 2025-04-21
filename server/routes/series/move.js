@@ -12,7 +12,7 @@ const { getInfoListAsync, startCopyMoveAsync, createFolderAsync } = require('+li
  *
  *     body:
  *     {
- *        filepath: '/Users/ifonny/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv',
+ *        filepath: '/Users/nthouch/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv',
  *        serie: 'Brooklyn Nine-Nine (2014)',
  *        season: 6,
  *        episode: 15,
@@ -50,7 +50,7 @@ router.post('/move', async ctx => {
   const episodeString = episode.toString().length === 1 ? `E0${episode}` : `E${episode}`;
   const serieWithoutYear = serie.replace(/(\(\d{4}\))/gim, '').trim();
   const seasonName = season === 0 ? 'Specials' : `Saison ${season} (${lang})`;
-  const episodeFileName = `${serieWithoutYear} ${seasonString}${episodeString}${extension}`;
+  const episodeFileName = path.basename(filepath); // Use the original file name instead of generating a new one
 
   // Relative serie path to episode
   const serieFilePath = `/${serie}/${seasonName}/${episodeFileName}`;

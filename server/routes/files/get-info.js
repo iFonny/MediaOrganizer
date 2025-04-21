@@ -6,7 +6,7 @@ const { BadRequest } = require('+lib/error');
 
 /**
  * @api {get} /get-info Get file/directory info
- * @apiParam (query string) {string} filepath - ex: '/Users/ifonny/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv'
+ * @apiParam (query string) {string} filepath - ex: '/Users/nthouch/Desktop/JDownloader/Series/Brooklyn.Nine-Nine.S06E15.MULTi.1080p.WEB.x264-CiELOS.mkv'
  * @apiSampleRequest /api/files/get-info
  */
 router.get('/get-info', async ctx => {

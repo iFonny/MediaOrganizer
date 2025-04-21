@@ -8,7 +8,7 @@
     },
     "paths": {
       "jdownloader": {
-        "volume": "/Users/ifonny/Desktop",
+        "volume": "/Users/nthouch/Desktop",
         "root": "/JDownloader",
         "series": "/Series",
         "films": "/Films",
@@ -16,16 +16,16 @@
       },
       "plex": {
         "series": {
-          "volumeA-L": "/Users/ifonny/Desktop/JDownloader/mnt",
+          "volumeA-L": "/Users/nthouch/Desktop/JDownloader/mnt",
           "A-L": "/Plex 1/Series",
-          "volumeM-S": "/Users/ifonny/Desktop/JDownloader/mnt",
+          "volumeM-S": "/Users/nthouch/Desktop/JDownloader/mnt",
           "M-S": "/Plex 2/Series",
-          "volumeT-Z": "/Users/ifonny/Desktop/JDownloader/mnt",
+          "volumeT-Z": "/Users/nthouch/Desktop/JDownloader/mnt",
           "T-Z": "/Plex 3/Series"
         },
-        "volumeFilms": "/Users/ifonny/Desktop/JDownloader/mnt",
+        "volumeFilms": "/Users/nthouch/Desktop/JDownloader/mnt",
         "films": "/Plex 4/Films",
-        "volumeFilmsHR": "/Users/ifonny/Desktop/JDownloader/mnt",
+        "volumeFilmsHR": "/Users/nthouch/Desktop/JDownloader/mnt",
         "filmsHR": "/Plex 1/Films (HR)"
       }
     },

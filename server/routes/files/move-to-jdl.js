@@ -11,7 +11,7 @@ const { BadRequest } = require('+lib/error');
  *
  *     body:
  *     {
- *        filepath: '/Users/ifonny/Desktop/JDownloader/Moving/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
+ *        filepath: '/Users/nthouch/Desktop/JDownloader/Moving/Jojo.Rabbit.2019.MULTi.2160p.UHD.BluRay.x265-OohLaLa.mkv',
  *        destination: 'films',
  *        overwrite: false (optional)
  *     }
