@@ -58,7 +58,7 @@
                   <b-checkbox v-model="moveEpisodeForm.overwrite" type="is-danger">Overwrite</b-checkbox>
                 </b-field>
                 <b-field>
-                  <b-checkbox v-model="moveEpisodeForm.shouldFormatName" type="is-info">Format Ep Name</b-checkbox>
+                  <b-checkbox v-model="moveEpisodeForm.shouldFormatName" type="is-info">Rename file (formatted)</b-checkbox>
                 </b-field>
               </div>
               <div class="column">
